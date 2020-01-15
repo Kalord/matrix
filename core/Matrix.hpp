@@ -64,6 +64,30 @@ public:
     }
 
     /**
+     * Проверка равности матриц
+     * Матрицы считаются равными, когда:
+     *      1)Имеют одинаковый размер
+     *      2)Элемент первой матрице равен элементу второй матрице,
+     *      то есть A[i][j] == B[i][j]
+     **/
+    bool operator==(Matrix<T>& m)
+    {
+        if(this->getSizeRows() != m.getSizeRows() || 
+           this->getSizeColumns() != m.getSizeColumns()
+        ) return false;
+
+        for(int i = 0; i < this->getSizeRows(); i++)
+        {
+            for(int j = 0; j < this->getSizeColumns(); j++)
+            {
+                if(this->get(i, j) != m[i][j]) return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Сложение матрицы на матрицу
      **/
     /*
