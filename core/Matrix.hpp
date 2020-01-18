@@ -1,3 +1,8 @@
+#pragma once
+
+#include <sys/types.h>
+#include <iostream>
+
 /**
  * Класс для работы с матрицами
  * 
@@ -28,19 +33,31 @@ public:
     /**
      * Конструктор
      **/
-    Matrix(size_t rows, size_t columns, T** matrix) :
-    rows(rows), columns(columns) 
-    {
-        this->matrix = matrix;
-    }
+    Matrix(size_t rows, size_t columns, T** matrix = nullptr) :
+    rows(rows), columns(columns), matrix(matrix)
+    {}
 
     /**
      * Деструктор
      **/
     ~Matrix()
     {
-        for(int i = 0; i < rows; i++) delete [] this->matrix[i];
+        for(int i = 0; i < this->getSizeRows(); i++) delete [] this->matrix[i];
         delete [] this->matrix;
+    }
+
+    /**
+     * Инициализация матрицы
+     **/
+    void initMatrix(size_t defaultValue = 0)
+    {
+        this->matrix = new T*[this->getSizeRows()];
+
+        for(int i = 0; i < this->getSizeRows(); i++)
+        {
+            this->matrix[i] = new T[this->getSizeColumns()];
+            for(int j = 0; j < this->getSizeColumns(); j++) this->matrix[i][j] = defaultValue;
+        }
     }
 
     size_t getSizeRows()
@@ -53,7 +70,7 @@ public:
         return this->columns;
     }
 
-    T* operator[](int i)
+    T* operator[](size_t i)
     {
         return this->matrix[i];
     }
@@ -61,6 +78,11 @@ public:
     T get(size_t row, size_t column)
     {
         return this->matrix[row][column];
+    }
+
+    void set(size_t row, size_t column, T value)
+    {
+        this->matrix[row][column] = value;
     }
 
     /**
@@ -86,30 +108,4 @@ public:
 
         return true;
     }
-
-    /**
-     * Сложение матрицы на матрицу
-     **/
-    /*
-    Matrix<T>& operator+(const Matrix<T>& m)
-    {
-        //Матрицы должны быть одинакового размера
-        if(this->getSizeRows() != m->getSizeRows() ||
-           this->getSizeColumns() != m->getSizeColumns()
-        ) return nullptr;
-
-        std::vector<std::vector<T>> accumulator;
-        for(int i = 0; i < this->getSizeRows(); i++)
-        {
-            accumulator.push_back(std::vector<T>{});
-            for(int j = 0; j < this->getSizeColumns(); j++)
-            {
-                accumulator.push_back(this[i][j] + m[i][j]);
-            }
-        }
-
-        Matrix<T> result(accumulator);
-        return result;
-    }
-    */
 };
