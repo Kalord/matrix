@@ -131,4 +131,28 @@ public:
 
         return accumulator;
     }
+
+    /**
+     * Умножение на скаляр
+     **/
+    Matrix<T> operator*(T scalar)
+    {
+        Matrix<T> accumulator(
+            this->getSizeRows(),
+            this->getSizeColumns()
+        );
+        accumulator.initMatrix();
+
+        for(int i = 0; i < this->getSizeRows(); i++)
+        {
+            for(int j = 0; j < this->getSizeColumns(); j++)
+            {
+                accumulator.set(i, j, this->get(i, j) * scalar);
+            }
+        }
+
+        return accumulator;
+    }
+
+    
 };
