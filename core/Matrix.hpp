@@ -154,5 +154,28 @@ public:
         return accumulator;
     }
 
-    
+    /**
+     * Умножение матрицы на матрицу
+     **/
+    Matrix<T> operator*(Matrix<T>& m)
+    {
+        Matrix<T> accumulator(
+            this->getSizeRows(),
+            this->getSizeColumns()
+        );
+        accumulator.initMatrix();
+
+        for(int i = 0; i < this->getSizeRows(); i++)
+        {
+            for(int j = 0; j < m.getSizeColumns(); j++)
+            {
+                for(int k = 0; k < this->getSizeColumns(); k++)
+                {
+                    accumulator.set(i, j, accumulator.get(i, j) + this->get(i, j) * m.get(k, j));
+                }
+            }
+        }
+
+        return accumulator;
+    }
 };
