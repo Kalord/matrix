@@ -108,4 +108,27 @@ public:
 
         return true;
     }
+
+    /**
+     * Сложение матрицы на матрицу
+     * Складывать можно только матрицы одинакового размера
+     **/
+    Matrix<T> operator+(Matrix<T>& m)
+    {
+        Matrix<T> accumulator(
+            this->getSizeRows(),
+            this->getSizeColumns()
+        );
+        accumulator.initMatrix();
+
+        for(int i = 0; i < this->getSizeRows(); i++)
+        {
+            for(int j = 0; j < this->getSizeColumns(); j++)
+            {
+                accumulator.set(i, j, this->get(i, j) + m.get(i, j));
+            }
+        }
+
+        return accumulator;
+    }
 };
